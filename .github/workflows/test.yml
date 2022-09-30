@@ -12,7 +12,7 @@ jobs:
       - name: Checkout self
         uses: actions/checkout@v3
       - name: Test Policy building
-        uses: CarstenBlumeMSFT/aadb2c-build-all-trustframework-policies@v0
+        uses: CarstenBlumeMSFT/aadb2c-build-all-trustframework-policies@v0.0.1
         with:
           policyFolder: ./SocialAndLocalAccounts
           outputFolder: ./testPoliciesOut
@@ -35,7 +35,7 @@ jobs:
       - name: Checkout self
         uses: actions/checkout@v3
       - name: Test Upload with Client Secret
-        uses: CarstenBlumeMSFT/aadb2c-upload-all-trustframework-policies@v0
+        uses: CarstenBlumeMSFT/aadb2c-upload-all-trustframework-policies@v0.0.1
         with:
           policyFolder: ./SocialAndLocalAccounts/Environments/AADB2CTest
           tenant: ${{ secrets.tenant }}
@@ -43,7 +43,7 @@ jobs:
           clientSecret: ${{ secrets.clientSecret }}
           verbose: "true"
       - name: Test Upload with Client Certificate
-        uses: CarstenBlumeMSFT/aadb2c-upload-all-trustframework-policies@v0
+        uses: CarstenBlumeMSFT/aadb2c-upload-all-trustframework-policies@v0.0.1
         with:
           policyFolder: ./SocialAndLocalAccounts/Environments/AADB2CTest
           tenant: ${{ secrets.tenant }}
@@ -53,7 +53,7 @@ jobs:
           clientCertificatePass: ${{ secrets.clientCertificatePass }}
           verbose: "true"
       - name: Test Upload with GitHub Token
-        uses: CarstenBlumeMSFT/aadb2c-upload-all-trustframework-policies@v0
+        uses: CarstenBlumeMSFT/aadb2c-upload-all-trustframework-policies@v0.0.1
         with:
           policyFolder: ./SocialAndLocalAccounts/Environments/AADB2CTest
           tenant: ${{ secrets.tenant }}
