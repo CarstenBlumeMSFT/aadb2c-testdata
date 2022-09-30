@@ -1,0 +1,22 @@
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- task: B2CBuildAllPolicies@0
+  inputs:
+    policyFolder: './SocialAndLocalAccounts'
+    outputFolder: './policyOutput'
+    renumberSteps: true
+
+- task: B2CUploadAllPolicies@0
+  inputs:
+    b2cGraphServicePrincipal: 'B2C Client Secret'
+    policyFolder: './policyOutput/AADB2CTest'
+
+- task: B2CUploadAllPolicies@0
+  inputs:
+    b2cGraphServicePrincipal: 'B2C Client Certificate'
+    policyFolder: './policyOutput/AADB2CTest'
