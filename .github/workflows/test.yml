@@ -1,0 +1,63 @@
+name: 'test'
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  testBuild:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout self
+        uses: actions/checkout@v3
+      - name: Test Policy building
+        uses: CarstenBlumeMSFT/aadb2c-build-all-trustframework-policies@v0
+        with:
+          policyFolder: ./SocialAndLocalAccounts
+          outputFolder: ./testPoliciesOut
+          renumberSteps: true
+          verbose: true
+      - name: Upload policies
+        uses: actions/upload-artifact@v3
+        with:
+          name: builtPolicies
+          path: ./testPoliciesOut
+
+  testUpload:
+    runs-on: ubuntu-latest
+
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      - name: Checkout self
+        uses: actions/checkout@v3
+      - name: Test Upload with Client Secret
+        uses: CarstenBlumeMSFT/aadb2c-upload-all-trustframework-policies@v0
+        with:
+          policyFolder: ./SocialAndLocalAccounts/Environments/AADB2CTest
+          tenant: ${{ secrets.tenant }}
+          clientId: ${{ secrets.clientId }}
+          clientSecret: ${{ secrets.clientSecret }}
+          verbose: "true"
+      - name: Test Upload with Client Certificate
+        uses: CarstenBlumeMSFT/aadb2c-upload-all-trustframework-policies@v0
+        with:
+          policyFolder: ./SocialAndLocalAccounts/Environments/AADB2CTest
+          tenant: ${{ secrets.tenant }}
+          clientId: ${{ secrets.clientId }}
+          clientCertificateThumbprint: ${{ secrets.clientCertificateThumbprint }}
+          clientCertificateKey: ${{ secrets.clientCertificateKey }}
+          clientCertificatePass: ${{ secrets.clientCertificatePass }}
+          verbose: "true"
+      - name: Test Upload with GitHub Token
+        uses: CarstenBlumeMSFT/aadb2c-upload-all-trustframework-policies@v0
+        with:
+          policyFolder: ./SocialAndLocalAccounts/Environments/AADB2CTest
+          tenant: ${{ secrets.tenant }}
+          clientId: ${{ secrets.clientId }}
+          verbose: "true"
+
+
